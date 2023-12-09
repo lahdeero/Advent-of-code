@@ -2,7 +2,6 @@ use std::fs;
 
 #[derive(Debug)]
 struct Game {
-    id: u32,
     rounds: Vec<Round>,
 }
 
@@ -16,10 +15,6 @@ struct Round {
 const COLOR_RED: &str = "red";
 const COLOR_GREEN: &str = "green";
 const COLOR_BLUE: &str = "blue";
-
-const MAX_RED_CUBES: u32 = 12;
-const MAX_GREEN_CUBES: u32 = 13;
-const MAX_BLUE_CUBES: u32 = 14;
 
 fn amount_of_cubes_in_the_round(round: &str) -> Round {
     let colors = round.split(",").collect::<Vec<_>>();
@@ -42,15 +37,13 @@ fn amount_of_cubes_in_the_round(round: &str) -> Round {
 }
 
 fn main() {
-    let contents = fs::read_to_string("test1.txt").expect("Should have been able to read the file");
-
+    let contents = fs::read_to_string("input2.txt").expect("Should have been able to read the file");
     let lines: Vec<&str> = contents.lines().collect();
 
     let games: Vec<Game> = lines
         .iter()
         .map(|line| {
             let parts: Vec<&str> = line.split(":").collect();
-            let game_id: u32 = parts[0].split(" ").collect::<Vec<_>>()[1].parse().unwrap();
 
             let rounds: Vec<Round> = parts[1]
                 .split(";")
@@ -58,35 +51,33 @@ fn main() {
                 .collect();
 
             return Game {
-                id: game_id,
                 rounds,
             };
         })
         .collect();
 
-    // let mut id_sum = 0;
-    // for game in games {
-    //     let mut possible = true;
-    //     for round in game.rounds {
-    //         if possible == false {
-    //             break;
-    //         }
+    let mut power = 0;
+    for game in games {
+        let mut max_red = 0;
+        let mut max_green = 0;
+        let mut max_blue = 0;
+        for round in game.rounds {
+            let red = round.red;
+            let green = round.green;
+            let blue = round.blue;
 
-    //         let red = round.red;
-    //         let green = round.green;
-    //         let blue = round.blue;
+            if red > max_red {
+                max_red = red;
+            }
+            if green > max_green {
+                max_green = green;
+            }
+            if blue > max_blue {
+                max_blue = blue;
+            }
+        }
+        power += max_red * max_green * max_blue;
+    }
 
-    //         if red > MAX_RED_CUBES {
-    //             possible = false;
-    //         } else if green > MAX_GREEN_CUBES {
-    //             possible = false;
-    //         } else if blue > MAX_BLUE_CUBES {
-    //             possible = false;
-    //         }
-    //     }
-    //     if possible {
-    //         id_sum += game.id;
-    //     }
-    // }
-    println!("Sum of ids: {}", id_sum);
+    println!("Power: {}", power);
 }
