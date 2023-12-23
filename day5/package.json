@@ -1,0 +1,16 @@
+{
+  "name": "day5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "day5.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --trace-uncaught ./src/day5.js",
+    "test": "vitest --watch=false"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^1.1.0"
+  }
+}

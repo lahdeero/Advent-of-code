@@ -1,0 +1,6 @@
+seeds: 30 1
+
+soil-to-fertilizer map:
+39 0 15
+0 15 37
+37 52 2

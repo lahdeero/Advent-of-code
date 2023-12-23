@@ -1,0 +1,5 @@
+seeds: 6 25
+
+seed-to-soil map:
+50 10 11
+10 21 9
