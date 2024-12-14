@@ -2,3 +2,4 @@
 *.pdb
 debug/
 node_modules/
+.rustc_info.json
